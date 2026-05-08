@@ -6,8 +6,17 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func SetupRoutes() {
-	http.HandleFunc("/get", handler.TestConnection)
+func SetupRoutes() http.Handler {
 
-	//r := chi.NewRouter() Define a switch to decide which method use
+	r := chi.NewRouter()
+	
+	http.HandleFunc("/get", handler.TestConnection)
+	
+	r.Get("/students", handler.GetStudent)
+	r.Post("/students", handler.PostStudent)
+	r.Put("/students/{id}", handler.UpdateStudent)
+	r.Get("/students/{id}", handler.GetStudentById)
+	r.Delete("/students/{id}", handler.DeleteStudent)
+
+	return r
 }
