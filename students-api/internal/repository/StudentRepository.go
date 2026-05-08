@@ -2,10 +2,16 @@ package repository
 
 import "api/internal/model"
 
-func Find() model.Student {
+var Students []model.Student
 
-	grades := []float64{1.0, 2.0, 3.0}
+func Find() []model.Student {
 
-	return model.Student{Nome: "joao", Idade: 20, Notas: grades, Media: 4.0, Situacao: "test"}
+	students := make([]model.Student,0)
+
+	for _, studentsRegistered := range Students {
+		students = append(students, studentsRegistered)
+	}
+
+	return students
 
 }

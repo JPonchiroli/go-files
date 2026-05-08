@@ -5,7 +5,7 @@ import (
 	"api/internal/repository"
 )
 
-func GetStudent() model.Student {
+func GetStudent() []model.Student {
 
 	return repository.Find()
 

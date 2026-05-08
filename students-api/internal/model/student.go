@@ -1,9 +1,10 @@
 package model
 
 type Student struct {
-  Nome string
-  Idade int
-  Notas []float64
-  Media float64
-  Situacao string
+  Id        int       `json:"id"`     
+  Name      string    `json:"name"`
+  Age       int       `json:"age"`
+  Grades    []float64 `json:"grades"`
+  Average   float64   `json:"average"`
+  Situation string    `json:"situation"`
 }
