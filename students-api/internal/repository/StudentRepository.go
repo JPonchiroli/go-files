@@ -15,3 +15,9 @@ func Find() []model.Student {
 	return students
 
 }
+
+func Create(student model.Student) {
+
+	Students = append(Students, student)
+
+}

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"api/internal/model"
 	"api/internal/service"
 	"encoding/json"
 	"fmt"
@@ -30,6 +31,23 @@ func GetStudentById(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostStudent(w http.ResponseWriter, r *http.Request) {
+
+	var student model.Student
+
+	err := json.NewDecoder(r.Body).Decode(&student)
+
+	if err != nil {
+
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+
+	}
+
+	service.PostStudent(&student)
+
+	w.WriteHeader(http.StatusCreated)
+
+	json.NewEncoder(w).Encode(student)
 
 }
 
