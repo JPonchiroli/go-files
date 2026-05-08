@@ -1,6 +1,6 @@
 package model
 
-type Aluno struct {
+type Student struct {
   Nome string
   Idade int
   Notas []float64
