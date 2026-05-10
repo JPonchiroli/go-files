@@ -4,6 +4,7 @@ import (
 	"api/internal/model"
 	"api/internal/repository"
 	"api/internal/utils"
+	"strings"
 )
 
 func GetStudent() []model.Student {
@@ -28,4 +29,19 @@ func PostStudent(students *model.StudentRequest) bool{
 	}
 
 	return true
+}
+
+func DeleteStudent(studentName string) {
+
+	for i, student := range repository.Students {
+
+		if strings.EqualFold(student.Name, studentName) {
+
+			repository.Students = append(repository.Students[:i], repository.Students[i + 1:]...)
+			break
+
+		}
+
+	}
+
 }

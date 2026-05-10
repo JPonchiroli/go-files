@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func TestConnection(w http.ResponseWriter, r *http.Request) {
@@ -30,14 +32,7 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 
 	var students model.StudentRequest
 
-	err := json.NewDecoder(r.Body).Decode(&students)
-
-	if err != nil {
-
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
-		return
-
-	}
+	verifyErr(w, r, &students)
 
 	service.PostStudent(&students)
 
@@ -48,5 +43,28 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteStudent(w http.ResponseWriter, r *http.Request) {
+
+	studentName := chi.URLParam(r, "name")
+	
+	verifyErr(w, r, studentName)
+
+	service.DeleteStudent(studentName)
+
+	w.WriteHeader(http.StatusOK)
+
+	json.NewEncoder(w).Encode(true)
+
+}
+
+func verifyErr(w http.ResponseWriter, r *http.Request, element any){
+
+	err := json.NewDecoder(r.Body).Decode(&element)
+
+	if err != nil {
+
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+
+	}
 
 }
