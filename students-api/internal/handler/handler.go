@@ -28,9 +28,9 @@ func GetStudent(w http.ResponseWriter, r *http.Request) {
 
 func PostStudent(w http.ResponseWriter, r *http.Request) {
 
-	var student model.Student
+	var students model.StudentRequest
 
-	err := json.NewDecoder(r.Body).Decode(&student)
+	err := json.NewDecoder(r.Body).Decode(&students)
 
 	if err != nil {
 
@@ -39,7 +39,7 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	service.PostStudent(&student)
+	service.PostStudent(&students)
 
 	w.WriteHeader(http.StatusCreated)
 

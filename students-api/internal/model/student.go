@@ -8,3 +8,7 @@ type Student struct {
   Average   float64   `json:"average"`
   Situation string    `json:"situation"`
 }
+
+type StudentRequest struct {
+	Names []string `json:"names"`
+}

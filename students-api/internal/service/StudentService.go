@@ -12,14 +12,20 @@ func GetStudent() []model.Student {
 
 }
 
-func PostStudent(student *model.Student) model.Student{
+func PostStudent(students *model.StudentRequest) bool{
 
-	student.Age = utils.RandAge()
-	student.Grades = utils.RandGrades(3)
-	student.Average = utils.CalculateAverage(student.Grades)
-	student.Situation = utils.VerifySituation(student.Average)
+	for _, student := range students.Names {
 
-	repository.Create(*student)
+		var newStudent model.Student
+		
+		newStudent.Name = student
+		newStudent.Age = utils.RandAge()
+		newStudent.Grades = utils.RandGrades(3)
+		newStudent.Average = utils.CalculateAverage(newStudent.Grades)
+		newStudent.Situation = utils.VerifySituation(newStudent.Average)
 
-	return *student
+		repository.Create(newStudent)
+	}
+
+	return true
 }
