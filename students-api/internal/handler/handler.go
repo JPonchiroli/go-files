@@ -26,10 +26,6 @@ func GetStudent(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetStudentById(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func PostStudent(w http.ResponseWriter, r *http.Request) {
 
 	var student model.Student
@@ -47,11 +43,7 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 
-	json.NewEncoder(w).Encode(student)
-
-}
-
-func UpdateStudent(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(students)
 
 }
 

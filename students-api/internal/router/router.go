@@ -14,8 +14,6 @@ func SetupRoutes() http.Handler {
 	
 	r.Get("/students", handler.GetStudent)
 	r.Post("/students", handler.PostStudent)
-	r.Put("/students/{id}", handler.UpdateStudent)
-	r.Get("/students/{id}", handler.GetStudentById)
 	r.Delete("/students/{id}", handler.DeleteStudent)
 
 	return r
