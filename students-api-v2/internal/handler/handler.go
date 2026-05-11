@@ -1,12 +1,11 @@
 package handler
 
 import (
-	"api/internal/model"
-	"api/internal/service"
-	"encoding/json"
 	"fmt"
 	"net/http"
-
+	"encoding/json"
+	"api/internal/model"
+	"api/internal/service"
 	"github.com/go-chi/chi/v5"
 )
 
