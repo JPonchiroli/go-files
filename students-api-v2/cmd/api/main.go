@@ -1,14 +1,30 @@
 package main
 
 import (
-	"api/internal/router"
+	"api/internal/database"
+	"api/internal/handler"
+	"api/internal/repository"
+	"api/internal/service"
 	"log"
 	"net/http"
 )
 
 func main() {
-	r := router.SetupRoutes()
-	
-	log.Println("Server Running in :8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+
+	db, err := database.Connection()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	studentRepository := repository.NewStudentRepository(db)
+
+	studentService := service.NewStudentService(studentRepository)
+
+	studentHandler := handler.NewStudentHandler(studentService)
+
+	router := handler.SetupRoutes(studentHandler)
+
+	http.ListenAndServe(":8080", router)
+
 }

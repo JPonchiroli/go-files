@@ -1,8 +1,21 @@
 package repository
 
-import "api/internal/model"
+import (
+	"api/internal/model"
+	"database/sql"
+)
 
-var Students []model.Student
+type StudentRepository struct {
+	DB *sql.DB
+}
+
+func NewStudentRepository(db *sql.DB) *StudentRepository {
+
+	return &StudentRepository{
+		DB: db,
+	}
+
+}
 
 func Find() []model.Student {
 

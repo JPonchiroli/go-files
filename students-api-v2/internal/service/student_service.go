@@ -7,6 +7,18 @@ import (
 	"strings"
 )
 
+type StudentService struct {
+	Repository *repository.StudentRepository
+}
+
+func NewStudentService(repository *repository.StudentRepository) *StudentService {
+
+	return &StudentService{
+		Repository: repository,
+	}
+
+}
+
 func GetStudent() []model.Student {
 
 	return repository.Find()

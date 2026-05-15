@@ -9,6 +9,18 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+type StudentHandler struct {
+	Service *service.StudentService
+}
+
+func NewStudentHandler(service *service.StudentService) * StudentHandler {
+
+	return &StudentHandler{
+		Service: service,
+	}
+
+}
+
 func TestConnection(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodGet {
@@ -20,10 +32,7 @@ func TestConnection(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetStudent(w http.ResponseWriter, r *http.Request) {
-
-	student := service.GetStudent()
-	json.NewEncoder(w).Encode(student)
+func (h *StudentHandler) GetStudents(w http.ResponseWriter, r *http.Request,) {
 
 }
 
@@ -31,7 +40,14 @@ func PostStudent(w http.ResponseWriter, r *http.Request) {
 
 	var students model.StudentRequest
 
-	verifyErr(w, r, &students)
+	err := json.NewDecoder(r.Body).Decode(&students)
+
+	if err != nil {
+
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+
+	}
 
 	service.PostStudent(&students)
 
@@ -45,19 +61,7 @@ func DeleteStudent(w http.ResponseWriter, r *http.Request) {
 
 	studentName := chi.URLParam(r, "name")
 	
-	verifyErr(w, r, studentName)
-
-	service.DeleteStudent(studentName)
-
-	w.WriteHeader(http.StatusOK)
-
-	json.NewEncoder(w).Encode(true)
-
-}
-
-func verifyErr(w http.ResponseWriter, r *http.Request, element any){
-
-	err := json.NewDecoder(r.Body).Decode(&element)
+	err := json.NewDecoder(r.Body).Decode(&studentName)
 
 	if err != nil {
 
@@ -65,5 +69,11 @@ func verifyErr(w http.ResponseWriter, r *http.Request, element any){
 		return
 
 	}
+
+	service.DeleteStudent(studentName)
+
+	w.WriteHeader(http.StatusOK)
+
+	json.NewEncoder(w).Encode(true)
 
 }
